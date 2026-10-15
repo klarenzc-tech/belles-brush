@@ -1,0 +1,120 @@
+@import "tailwindcss";
+
+/*
+ * Belle's Brush design tokens
+ * Colours are sampled from the supplied logo:
+ *   ink    — the deep lake-teal of the "Belle's Brush" wordmark
+ *   lake   — the blue brushstroke under the wordmark
+ *   gold   — the sunrise sky behind the mountain
+ *   plum   — Belle's hoodie (used very sparingly as a personal accent)
+ */
+@theme {
+  --color-ink: #063a3c;
+  --color-ink-soft: #0f4f50;
+  --color-forest: #1f4a3a;
+  --color-teal: #0b6b6e;
+  --color-lake: #2f78ae;
+  --color-gold: #d9a75f;
+  --color-gold-deep: #8a5d1c;
+  --color-sunrise: #f3cb8d;
+  --color-canvas: #faf8f2;
+  --color-paper: #f2ede1;
+  --color-linen: #e7dfcd;
+  --color-charcoal: #252a28;
+  --color-stone: #5b625e;
+  --color-plum: #7b4a6e;
+
+  --font-serif: "Fraunces Variable", Georgia, "Times New Roman", serif;
+  --font-sans: "Source Sans 3 Variable", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-brush: "Caveat", "Segoe Script", cursive;
+
+  --radius-organic: 2.25rem 1.25rem 2.5rem 1.5rem;
+
+  --animate-drift: drift 22s ease-in-out infinite alternate;
+
+  @keyframes drift {
+    from { transform: translate3d(0, 0, 0); }
+    to { transform: translate3d(-2.5%, 0, 0); }
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 6rem;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.7;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    color: var(--color-ink);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    font-variation-settings: "SOFT" 60, "WONK" 0;
+    text-wrap: balance;
+  }
+
+  p { text-wrap: pretty; }
+
+  ::selection {
+    background: var(--color-sunrise);
+    color: var(--color-ink);
+  }
+
+  /* Visible, consistent keyboard focus everywhere */
+  :focus-visible {
+    outline: 3px solid var(--color-lake);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+}
+
+@layer components {
+  /* Subtle canvas-weave texture for warm backgrounds */
+  .canvas-texture {
+    background-image:
+      url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .35 0 0 0 0 .3 0 0 0 0 .2 0 0 0 .06 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+      repeating-linear-gradient(90deg, rgba(120, 100, 60, 0.025) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(0deg, rgba(120, 100, 60, 0.025) 0 1px, transparent 1px 4px);
+  }
+
+  .prose-story p + p { margin-top: 1.25rem; }
+
+  .container-page {
+    width: 100%;
+    max-width: 76rem;
+    margin-inline: auto;
+    padding-inline: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .container-page { padding-inline: 2rem; }
+  }
+
+  .eyebrow {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-teal);
+  }
+}
+
+/* Respect users who prefer less motion */
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
